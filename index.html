@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>برنامج عبادة - صفحة البنت</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#1a6b3c;--gd:#0f4a28;--gl:#e8f6ee;--gold:#b8860b;--bg:#fdfaf5;--sf:#fff;--bd:#e2d9c8;--tx:#2c2416;--mu:#7a6a52;--r:#c0392b}
+*{box-sizing:border-box;font-family:'Amiri',serif!important}body{margin:0;background:var(--bg);color:var(--tx);padding:18px 12px 40px}.wrap{max-width:520px;margin:auto}.hdr{text-align:center;border-bottom:1px solid var(--bd);padding-bottom:14px;margin-bottom:14px}.bsm{color:var(--gold);font-weight:700}.hdr h1{margin:5px 0;color:var(--gold);font-size:26px}.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;box-shadow:0 2px 12px #0001;padding:14px;margin-bottom:12px}.row{display:flex;gap:8px;align-items:center;margin-bottom:10px}label{font-weight:700;font-size:15px}input[type=text]{flex:1;border:1.5px solid var(--bd);border-radius:10px;padding:10px;font-size:16px;outline:none}input[type=text]:focus{border-color:var(--g)}.daybox{text-align:center;background:var(--gl);border-color:#5cb87a}.daynum{font-size:32px;font-weight:800;color:var(--g)}.item{display:flex;align-items:flex-start;gap:10px;border:1px solid var(--bd);border-radius:12px;padding:10px;margin-bottom:8px;background:#fff}.item input{width:22px;height:22px;margin-top:3px;accent-color:var(--g)}.item-main{flex:1}.name{font-weight:700;font-size:16px}.pts{color:var(--g);font-weight:700;font-size:13px}.alt{color:var(--mu);font-size:12px;line-height:1.6}.bonus{background:#fffdf0;border-color:#f0c040}.bonus .pts{color:var(--gold)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{text-align:center;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:10px}.stat b{display:block;color:var(--g);font-size:24px}.btn{width:100%;border:0;border-radius:12px;padding:13px;font-size:17px;font-weight:700;cursor:pointer;background:linear-gradient(90deg,var(--g),var(--gd));color:#fff}.btn:disabled{opacity:.6}.reset{background:#fff;color:var(--r);border:1.5px solid var(--r);margin-top:8px}.note{text-align:center;color:var(--mu);font-size:12px;line-height:1.8}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--gd);color:#fff;padding:10px 22px;border-radius:30px;opacity:0;transition:.25s;white-space:nowrap}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+
+<link rel="manifest" href="manifest.json?v=3">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
+<meta name="theme-color" content="#f5a3c3">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="برنامج عبادة">
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr"><div class="bsm">بسم الله الرحمن الرحيم</div><h1>برنامج عبادة</h1><p>تعبئة وتسليم اليوم الحالي فقط</p></div>
+  <div class="card">
+    <div class="row"><label>الاسم:</label><input id="girlName" type="text" placeholder="اكتبي اسمك"></div>
+  </div>
+  <div class="card daybox"><div>اليوم الحالي</div><div class="daynum" id="dayNum">1</div></div>
+  <div class="card" id="itemsBox"></div>
+  <div class="card stats"><div class="stat"><span>الأساسي</span><b id="basePts">0</b></div><div class="stat"><span>الإضافات</span><b id="bonusPts">0</b></div><div class="stat"><span>المجموع</span><b id="totalPts">0</b></div></div>
+  <button class="btn" id="submitBtn" onclick="submitDay()">تسليم اليوم</button>
+  <button class="btn reset" onclick="resetToday()">تفريغ اختيارات اليوم</button>
+  <p class="note">الأساسي من 100، والإضافات قد تجعل المجموع أكثر من 100.</p>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const API_URL='https://script.google.com/macros/s/AKfycbxwQ0sJ7vnhEJL8Ty2J4x8xUrG4sU5PElMbtzyK7UotDnLfpRv7NtO5EdAcDcjzyklMZg/exec';
+const START_DATE='2026-07-03';
+const ITEMS=[
+{key:'fard',name:'الفروض الخمسة',points:20,alt:'بدل الفروض: 250 حوقلة'},
+{key:'sunan',name:'سنن الفروض',points:5,alt:'بدل السنن: 100 حوقلة'},
+{key:'duha',name:'ركعتا الضحى',points:5,alt:'بدل الضحى: 15 تسبيح'},
+{key:'awwabin',name:'ركعتا الأوابين',points:5,alt:'بدل الأوابين: 15 تسبيح'},
+{key:'azkarMorning',name:'أذكار الصباح',points:5,alt:''},
+{key:'azkarEvening',name:'أذكار المساء',points:5,alt:''},
+{key:'mulk',name:'سورة الملك قبل النوم',points:5,alt:'بدل سورة الملك: 100 استغفار'},
+{key:'istighfar',name:'استغفار 500',points:5,alt:''},
+{key:'tahleel',name:'تهليل 500',points:5,alt:''},
+{key:'salatNabi',name:'صلاة عالرسول 500',points:5,alt:''},
+{key:'quran',name:'جزء قرآن',points:10,alt:'بدل جزء القرآن: 500 تهليل'},
+{key:'hifz',name:'حفظ صفحتين',points:10,alt:''},
+{key:'helpMom',name:'مساعدة الأم',points:10,alt:''},
+{key:'goodWord',name:'كلمة طيبة دعوية',points:5,alt:''},
+{key:'sleep',name:'النوم الساعة 10–11',points:10,bonus:true,alt:''},
+{key:'noProblems',name:'يوم بلا مشاكل',points:10,bonus:true,alt:''}
+];
+function currentDay(){const s=new Date(START_DATE+'T00:00:00');const n=new Date();s.setHours(0,0,0,0);n.setHours(0,0,0,0);return Math.max(1,Math.floor((n-s)/86400000)+1)}
+const DAY=currentDay();document.getElementById('dayNum').textContent=DAY;
+function render(){document.getElementById('itemsBox').innerHTML=ITEMS.map(i=>`<label class="item ${i.bonus?'bonus':''}"><input type="checkbox" data-key="${i.key}" onchange="calc()"><div class="item-main"><div class="name">${i.name}</div><div class="pts">${i.bonus?'+':''}${i.points} علامة</div>${i.alt?`<div class="alt">${i.alt}</div>`:''}</div></label>`).join('');loadLocal();calc()}
+function values(){const v={};document.querySelectorAll('[data-key]').forEach(c=>v[c.dataset.key]=c.checked);return v}
+function calc(){let b=0,bo=0;ITEMS.forEach(i=>{if(values()[i.key]) i.bonus?bo+=i.points:b+=i.points});basePts.textContent=b;bonusPts.textContent=bo;totalPts.textContent=b+bo;localStorage.setItem('ibada_'+DAY,JSON.stringify(values()));localStorage.setItem('ibada_name',girlName.value.trim())}
+function loadLocal(){girlName.value=localStorage.getItem('ibada_name')||'';let v={};try{v=JSON.parse(localStorage.getItem('ibada_'+DAY)||'{}')}catch(e){}document.querySelectorAll('[data-key]').forEach(c=>c.checked=!!v[c.dataset.key])}
+girlName.addEventListener('input',calc);
+async function submitDay(){const name=girlName.value.trim();if(!name)return toast('اكتبي الاسم أولاً');submitBtn.disabled=true;submitBtn.textContent='جاري التسليم...';try{const res=await fetch(API_URL,{method:'POST',body:JSON.stringify({action:'submitDay',name,day:DAY,values:values()})});const data=await res.json();toast(data.message||'تم');}catch(e){toast('حدث خطأ بالتسليم')}submitBtn.disabled=false;submitBtn.textContent='تسليم اليوم'}
+function resetToday(){localStorage.removeItem('ibada_'+DAY);document.querySelectorAll('[data-key]').forEach(c=>c.checked=false);calc();toast('تم التفريغ')}
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500)}
+render();
+</script>
+</body></html>
