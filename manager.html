@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نتائج برنامج عبادة</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#1a6b3c;--gd:#0f4a28;--gl:#e8f6ee;--gold:#b8860b;--bg:#f0f7f0;--sf:#fff;--bd:#d0e8d0;--tx:#1a2e1a;--mu:#5a7a5a;--r:#c0392b}
+*{box-sizing:border-box;font-family:'Amiri',serif!important}
+body{margin:0;background:var(--bg);color:var(--tx);padding:16px 10px 40px}
+.wrap{max-width:1100px;margin:auto}
+.hdr{text-align:center;padding:22px 14px;background:linear-gradient(135deg,var(--gd),var(--g));border-radius:16px;color:#fff;margin-bottom:14px}
+.bsm{color:#d4f4e2;font-weight:700}.hdr h1{color:var(--gold);margin:4px 0;font-size:28px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+button{font-size:15px;font-weight:700;border-radius:10px;padding:10px;border:0;cursor:pointer}
+.refresh{background:var(--g);color:#fff}.delete{background:#fff;color:var(--r);border:1.5px solid var(--r)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:12px;box-shadow:0 2px 10px #0001}
+.stat{text-align:center}.stat b{display:block;color:var(--g);font-size:26px}
+.section-title{font-size:18px;font-weight:800;color:var(--g);margin:14px 0 8px}
+.day-winners{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-bottom:14px}
+.winner{background:#fffdf0;border:1px solid #f0c040;border-radius:14px;padding:12px;text-align:center}
+.winner .day{color:#856404;font-weight:800}.winner .name{font-size:20px;font-weight:800;color:var(--g)}.winner .pts{color:#856404;font-weight:700}
+.table-wrap{overflow:auto;background:#fff;border:1px solid var(--bd);border-radius:14px;box-shadow:0 2px 10px #0001;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{border:1px solid #e4efe4;padding:8px;text-align:center;font-size:14px}
+th{background:var(--g);color:#fff;position:sticky;top:0}
+td.name{font-weight:800;text-align:right;background:#f8fff8}
+.badge{display:inline-block;border-radius:999px;padding:2px 8px;font-weight:800;font-size:12px}
+.done{background:#d4f4e2;color:#1a6b3c}.miss{background:#f3f3f3;color:#999}
+.rank{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:10px;margin-bottom:8px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.rank.top{background:#fffdf0;border-color:#f0c040}.rank .num{font-weight:900;color:var(--gold)}.rank .name{font-weight:900;font-size:17px}.rank .pts{font-weight:900;color:var(--g)}
+.details{display:none;background:#fbfffb;border:1px solid var(--bd);border-radius:12px;padding:10px;margin-top:8px}
+.details.open{display:block}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:6px}
+.item{border:1px solid #e3eee3;border-radius:10px;padding:7px;background:#fff;font-size:13px}
+.item.y{background:#e8f6ee;color:#1a6b3c}.item.n{background:#fff5f5;color:#c0392b}
+.empty{text-align:center;color:var(--mu);padding:40px;font-size:16px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--gd);color:#fff;padding:10px 22px;border-radius:30px;opacity:0;transition:.25s;white-space:nowrap;z-index:20}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:650px){.cards{grid-template-columns:repeat(2,1fr)}.btns{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr"><div class="bsm">بسم الله الرحمن الرحيم</div><h1>نتائج برنامج عبادة</h1></div>
+  <div class="btns"><button class="refresh" onclick="loadData()">تحديث النتائج</button><button class="delete" onclick="deleteGirl()">حذف بنت</button></div>
+  <div class="cards">
+    <div class="card stat"><span>عدد البنات</span><b id="girlsCount">0</b></div>
+    <div class="card stat"><span>عدد التسليمات</span><b id="subsCount">0</b></div>
+    <div class="card stat"><span>أعلى مجموع</span><b id="topScore">0</b></div>
+    <div class="card stat"><span>آخر يوم ظاهر</span><b id="maxDay">1</b></div>
+  </div>
+  <div class="section-title">الأولى في كل يوم</div>
+  <div id="dayWinners" class="day-winners"></div>
+  <div class="section-title">جدول الأيام لكل بنت</div>
+  <div id="daysTable"></div>
+  <div class="section-title">الترتيب الكلي</div>
+  <div id="overallRanks"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const API_URL='https://script.google.com/macros/s/AKfycbxwQ0sJ7vnhEJL8Ty2J4x8xUrG4sU5PElMbtzyK7UotDnLfpRv7NtO5EdAcDcjzyklMZg/exec';
+let DATA=null;
+
+async function loadData(){
+  try{
+    toast('جاري تحميل النتائج...');
+    const res=await fetch(API_URL+'?action=getData&ts='+Date.now());
+    DATA=await res.json();
+    if(!DATA.ok) throw new Error(DATA.message||'خطأ');
+    renderAll();
+    toast('تم تحديث النتائج');
+  }catch(e){
+    document.getElementById('dayWinners').innerHTML='<div class="empty">تعذر تحميل البيانات</div>';
+    toast('تعذر تحميل البيانات');
+  }
+}
+
+function getMaxDay(){
+  const subs=DATA?.submissions||[];
+  return Math.max(1,...subs.map(s=>Number(s.day)||1));
+}
+
+function renderAll(){
+  const girls=DATA.girls||[];
+  const subs=DATA.submissions||[];
+  girlsCount.textContent=girls.length;
+  subsCount.textContent=subs.length;
+  topScore.textContent=girls.length?Math.max(...girls.map(g=>Number(g.totalPoints)||0)):0;
+  maxDay.textContent=getMaxDay();
+  renderDayWinners();
+  renderDaysTable();
+  renderOverallRanks();
+}
+
+function renderDayWinners(){
+  const subs=DATA.submissions||[];
+  const max=getMaxDay();
+  let html='';
+  for(let d=1; d<=max; d++){
+    const daySubs=subs.filter(s=>Number(s.day)===d).sort((a,b)=>(b.totalPoints||0)-(a.totalPoints||0));
+    if(daySubs.length){
+      const w=daySubs[0];
+      html+=`<div class="winner"><div class="day">اليوم ${d}</div><div class="name">🏆 ${escapeHtml(w.name)}</div><div class="pts">${w.totalPoints} علامة</div></div>`;
+    }else{
+      html+=`<div class="winner"><div class="day">اليوم ${d}</div><div class="name">—</div><div class="pts">لا يوجد تسليم</div></div>`;
+    }
+  }
+  dayWinners.innerHTML=html||'<div class="empty">لا توجد بيانات بعد</div>';
+}
+
+function renderDaysTable(){
+  const girls=DATA.girls||[];
+  const max=getMaxDay();
+  if(!girls.length){daysTable.innerHTML='<div class="empty">لا توجد بيانات بعد</div>';return;}
+  let html='<div class="table-wrap"><table><thead><tr><th>الاسم</th>';
+  for(let d=1;d<=max;d++) html+=`<th>اليوم ${d}</th>`;
+  html+='<th>المجموع</th></tr></thead><tbody>';
+  girls.forEach(g=>{
+    html+=`<tr><td class="name">${escapeHtml(g.name)}</td>`;
+    for(let d=1;d<=max;d++){
+      const s=g.days && g.days[d];
+      html+=`<td>${s?`<button class="badge done" onclick="toggleDetails('${safeId(g.name,d)}')">✅ ${s.totalPoints}</button>`:`<span class="badge miss">—</span>`}</td>`;
+    }
+    html+=`<td><b>${g.totalPoints||0}</b></td></tr>`;
+    for(let d=1;d<=max;d++){
+      const s=g.days && g.days[d];
+      if(s){
+        html+=`<tr><td colspan="${max+2}"><div id="${safeId(g.name,d)}" class="details">${detailHtml(s)}</div></td></tr>`;
+      }
+    }
+  });
+  html+='</tbody></table></div>';
+  daysTable.innerHTML=html;
+}
+
+function detailHtml(s){
+  const items=DATA.items||[];
+  return `<b>${escapeHtml(s.name)} - اليوم ${s.day}</b>
+  <p>الأساسي: ${s.basePoints} | الإضافات: ${s.bonusPoints} | المجموع: ${s.totalPoints}</p>
+  <div class="detail-grid">`+items.map(i=>`<div class="item ${s.values&&s.values[i.key]?'y':'n'}">${s.values&&s.values[i.key]?'✅':'❌'} ${escapeHtml(i.name)} (${i.points})</div>`).join('')+'</div>';
+}
+
+function renderOverallRanks(){
+  const girls=DATA.girls||[];
+  if(!girls.length){overallRanks.innerHTML='<div class="empty">لا توجد بيانات بعد</div>';return;}
+  overallRanks.innerHTML=girls.map((g,idx)=>`
+    <div class="rank ${idx===0?'top':''}">
+      <div><span class="num">#${idx+1}</span> <span class="name">${escapeHtml(g.name)}</span><br><small>عدد الأيام: ${g.submittedDays||0} | الأساسي: ${g.basePoints||0} | الإضافات: ${g.bonusPoints||0}</small></div>
+      <div class="pts">${g.totalPoints||0}</div>
+    </div>`).join('');
+}
+
+function toggleDetails(id){document.getElementById(id)?.classList.toggle('open')}
+function safeId(name,day){return 'd_'+btoa(unescape(encodeURIComponent(name))).replace(/=/g,'')+'_'+day}
+async function deleteGirl(){
+  const name=prompt('اكتبي اسم البنت المراد حذفها كما هو تمامًا:');
+  if(!name) return;
+  if(!confirm('هل أنتِ متأكدة من حذف كل بيانات '+name+'؟')) return;
+  try{
+    const res=await fetch(API_URL,{method:'POST',body:JSON.stringify({action:'deleteGirl',name})});
+    const data=await res.json();
+    toast(data.message||'تم');
+    loadData();
+  }catch(e){toast('تعذر الحذف')}
+}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500)}
+loadData();
+</script>
+</body>
+</html>
