@@ -3,146 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نتائج برنامج عبادة - صفحة المسؤولة</title>
+<title>نتائج برنامج عبادة </title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--g:#1a6b3c;--gd:#0f4a28;--gl:#e8f6ee;--gm:#5cb87a;--gold:#b8860b;--bg:#f0f7f0;--sf:#fff;--bd:#d0e8d0;--tx:#1a2e1a;--mu:#5a7a5a;--r:#c0392b;--rl:#fcd5d5;--sh:0 2px 16px #0001}
-*{box-sizing:border-box;font-family:'Amiri',serif!important}
-body{margin:0;background:var(--bg);color:var(--tx);padding:14px 10px 40px}
-.wrap{max-width:760px;margin:auto}
-.hdr{text-align:center;background:linear-gradient(135deg,var(--gd),var(--g));color:#fff;border-radius:16px;padding:18px 12px;margin-bottom:12px;box-shadow:var(--sh)}
-.bsm{color:#d9f5df;font-weight:700;font-size:14px}.hdr h1{margin:5px 0;color:var(--gold);font-size:26px}.hdr p{font-size:13px;margin:0;opacity:.9}
-.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.btn{border:0;border-radius:11px;padding:11px;font-size:15px;font-weight:700;cursor:pointer;background:var(--g);color:#fff}.btn:disabled{opacity:.55}.btn-del{background:#fff;color:var(--r);border:1.5px solid var(--r)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:12px}.stat{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:10px;text-align:center;box-shadow:0 1px 6px #0000000d}.stat span{display:block;color:var(--mu);font-size:12px}.stat b{display:block;color:var(--g);font-size:22px;line-height:1.2}
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;box-shadow:var(--sh);padding:12px;margin-bottom:12px}.card-title{font-weight:700;color:var(--g);font-size:16px;margin-bottom:10px}
-.search-row{display:flex;gap:8px;margin-bottom:10px}input,select{border:1.5px solid var(--bd);border-radius:10px;padding:9px 10px;font-size:14px;background:#fff;outline:none;color:var(--tx)}input:focus,select:focus{border-color:var(--g)}.search-row input{flex:1}.search-row select{width:145px}
-.rank{display:flex;align-items:center;gap:8px;background:#fafefa;border:1px solid var(--bd);border-radius:12px;padding:9px;margin-bottom:7px}.rank.top1{background:#fff9df;border-color:#f0c040}.rank.top2{background:#f7f7f7;border-color:#aaa}.rank.top3{background:#fff3e8;border-color:#cd9a6c}.num{width:28px;height:28px;border-radius:50%;background:var(--mu);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}.top1 .num{background:#d4a017}.top2 .num{background:#8a8f94}.top3 .num{background:#a16535}.rinfo{flex:1}.rname{font-weight:700;font-size:15px}.rmeta{color:var(--mu);font-size:12px}.rpts{font-weight:800;color:var(--g);font-size:18px}
-.girl{border:1px solid var(--bd);border-radius:14px;margin-bottom:12px;overflow:hidden;background:#fff}.girl-h{background:linear-gradient(135deg,var(--gd),var(--g));color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}.girl-name{font-size:17px;font-weight:700}.girl-total{color:#baf0c8;font-size:13px;font-weight:700}.girl-b{display:none;padding:12px}.girl.open .girl-b{display:block}
-.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:9px 0 12px}.day{border:1px solid var(--bd);border-radius:9px;min-height:42px;text-align:center;padding:5px 2px;font-size:11px;background:#f5f5f5;color:#999}.day.done{background:var(--gl);border-color:var(--gm);color:var(--g)}.day b{display:block;font-size:13px}.day small{display:block;font-size:10px}
-.table-wrap{overflow:auto;border-radius:12px;border:1px solid var(--bd)}table{width:100%;border-collapse:collapse;min-width:680px;background:#fff}th{background:var(--g);color:#fff;padding:7px 4px;font-size:12px;border:1px solid #287a4d}td{border:1px solid #e5eee5;text-align:center;padding:6px 4px;font-size:12px}td.item-name{text-align:right;font-weight:700}.ok{color:var(--g);font-weight:800}.no{color:var(--r);font-weight:800}.empty{text-align:center;color:var(--mu);padding:35px 10px;line-height:2}.loader{text-align:center;color:var(--mu);padding:20px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--gd);color:#fff;padding:10px 22px;border-radius:30px;opacity:0;transition:.25s;white-space:nowrap;z-index:999}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.admin-box{display:none}.admin-box.show{display:block}.del-row{display:flex;gap:8px}.del-row select{flex:1}.del-row button{width:130px}
-@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.days{grid-template-columns:repeat(5,1fr)}.btns{grid-template-columns:1fr}.search-row{flex-direction:column}.search-row select{width:100%}}
+:root{--g:#1a6b3c;--gd:#0f4a28;--gl:#e8f6ee;--gm:#5cb87a;--gold:#b8860b;--bg:#f0f7f0;--sf:#fff;--bd:#d0e8d0;--tx:#1a2e1a;--mu:#5a7a5a;--r:#c0392b;--rl:#fcd5d5;--sh:0 2px 16px rgba(0,0,0,.08)}
+*{box-sizing:border-box;font-family:'Amiri',serif!important}body{margin:0;background:var(--bg);color:var(--tx);padding:16px 10px 50px}.wrap{max-width:980px;margin:auto}.hdr{text-align:center;background:linear-gradient(135deg,var(--gd),var(--g));color:#fff;border-radius:16px;padding:22px 12px;margin-bottom:12px;box-shadow:var(--sh)}.bsm{font-size:15px;color:#d9f3df}.hdr h1{margin:5px 0;color:#d4a017;font-size:27px}.hdr p{font-size:13px;margin:0}.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.btn{border:0;border-radius:11px;padding:11px;font-size:15px;font-weight:700;cursor:pointer;background:var(--g);color:#fff}.btn-del{background:#fff;color:var(--r);border:1.5px solid var(--r)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}.stat{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:10px;text-align:center;box-shadow:0 1px 6px #0000000d}.stat span{display:block;color:var(--mu);font-size:12px}.stat b{font-size:23px;color:var(--g)}.card{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:12px;box-shadow:var(--sh)}.card-title{font-size:17px;font-weight:700;color:var(--g);margin-bottom:8px}.status{text-align:center;color:var(--mu);padding:25px}.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--bd)}table{width:100%;border-collapse:collapse;background:#fff;min-width:760px}th{background:var(--g);color:#fff;padding:8px 6px;font-size:13px;border:1px solid #2d7a4e;white-space:nowrap}td{padding:7px 6px;border:1px solid #e5eee5;text-align:center;font-size:13px}.name-cell{font-weight:700;text-align:right;position:sticky;right:0;background:#fff;z-index:1;min-width:120px}.total-cell{font-weight:700;color:var(--g)}.day-chip{display:inline-flex;align-items:center;justify-content:center;width:34px;height:30px;border-radius:7px;border:1px solid var(--bd);font-weight:700;cursor:pointer}.day-chip.done{background:var(--gl);border-color:var(--gm);color:var(--g)}.day-chip.miss{background:#f5f5f5;color:#bbb}.rank{display:flex;align-items:center;gap:9px;border:1px solid var(--bd);border-radius:11px;padding:8px;margin-bottom:6px;background:#fbfffb}.rank-num{width:28px;height:28px;border-radius:50%;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}.rank-info{flex:1}.rank-name{font-weight:700}.rank-meta{font-size:12px;color:var(--mu)}.rank-pts{font-size:18px;color:var(--g);font-weight:700}.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center;padding:12px}.modal.show{display:flex}.modal-box{background:#fff;border-radius:16px;max-width:520px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 10px 35px rgba(0,0,0,.25)}.modal-head{background:var(--g);color:#fff;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}.modal-head b{font-size:17px}.close{background:#fff;color:var(--r);border:0;border-radius:8px;padding:4px 12px;font-weight:700;cursor:pointer}.modal-body{padding:12px}.detail-row{display:flex;justify-content:space-between;gap:8px;padding:8px;border-bottom:1px solid #edf3ed}.detail-row.done{background:#f3fbf5}.detail-row.miss{background:#fff7f7}.detail-name{font-weight:700}.detail-pts{color:var(--g);font-weight:700}.detail-alt{font-size:11px;color:var(--mu);line-height:1.5}.sum-box{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}.sum{border:1px solid var(--bd);border-radius:10px;text-align:center;padding:8px}.sum b{display:block;color:var(--g);font-size:20px}select{width:100%;border:1.5px solid var(--bd);border-radius:10px;padding:10px;font-size:15px;background:#fff;margin-bottom:8px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--gd);color:#fff;padding:10px 22px;border-radius:30px;opacity:0;transition:.25s;white-space:nowrap;z-index:1000}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}@media(max-width:650px){.stats{grid-template-columns:repeat(2,1fr)}.btns{grid-template-columns:1fr}.hdr h1{font-size:24px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="hdr">
-    <div class="bsm">بسم الله الرحمن الرحيم</div>
-    <h1>نتائج برنامج عبادة</h1>
-    <p>صفحة المسؤولة</p>
-  </div>
-
-  <div class="btns">
-    <button class="btn" id="refreshBtn" onclick="loadData()">تحديث النتائج</button>
-    <button class="btn btn-del" onclick="toggleAdmin()">حذف بنت</button>
-  </div>
-
-  <div class="card admin-box" id="adminBox">
-    <div class="card-title">حذف بيانات بنت</div>
-    <div class="del-row">
-      <select id="deleteSelect"><option value="">اختاري الاسم</option></select>
-      <button class="btn btn-del" onclick="deleteGirl()">حذف</button>
-    </div>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><span>عدد البنات</span><b id="girlsCount">0</b></div>
-    <div class="stat"><span>عدد التسليمات</span><b id="subCount">0</b></div>
-    <div class="stat"><span>أعلى مجموع</span><b id="topScore">0</b></div>
-    <div class="stat"><span>آخر يوم ظاهر</span><b id="maxDay">1</b></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">الترتيب العام</div>
-    <div id="rankBox" class="loader">جاري تحميل البيانات...</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">تفاصيل البنات والأيام</div>
-    <div class="search-row">
-      <input id="searchInput" placeholder="بحث بالاسم" oninput="renderAll()">
-      <select id="dayFilter" onchange="renderAll()">
-        <option value="all">كل الأيام</option>
-      </select>
-    </div>
-    <div id="girlsBox" class="loader">جاري تحميل البيانات...</div>
-  </div>
+  <div class="hdr"><div class="bsm">بسم الله الرحمن الرحيم</div><h1>نتائج برنامج عبادة</h1><p>صفحة المسؤولة</p></div>
+  <div class="btns"><button class="btn" onclick="loadData()">تحديث النتائج</button><button class="btn btn-del" onclick="openDelete()">حذف بنت</button></div>
+  <div class="stats"><div class="stat"><span>عدد البنات</span><b id="girlsCount">0</b></div><div class="stat"><span>عدد التسليمات</span><b id="subsCount">0</b></div><div class="stat"><span>أعلى مجموع</span><b id="topScore">0</b></div><div class="stat"><span>آخر يوم ظاهر</span><b id="lastDay">1</b></div></div>
+  <div class="card"><div class="card-title">الترتيب العام</div><div id="rankingBox" class="status">جاري تحميل البيانات...</div></div>
+  <div class="card"><div class="card-title">جدول الأيام لكل بنت</div><div id="daysTableBox" class="status">جاري تحميل البيانات...</div></div>
 </div>
+<div class="modal" id="detailModal"><div class="modal-box"><div class="modal-head"><b id="modalTitle">تفاصيل اليوم</b><button class="close" onclick="closeModal('detailModal')">إغلاق</button></div><div class="modal-body" id="modalBody"></div></div></div>
+<div class="modal" id="deleteModal"><div class="modal-box"><div class="modal-head"><b>حذف بنت</b><button class="close" onclick="closeModal('deleteModal')">إغلاق</button></div><div class="modal-body"><select id="deleteSelect"><option value="">اختاري اسم البنت</option></select><button class="btn btn-del" onclick="deleteGirl()">تأكيد الحذف</button></div></div></div>
 <div class="toast" id="toast"></div>
 <script>
 const API_URL='https://script.google.com/macros/s/AKfycbxwQ0sJ7vnhEJL8Ty2J4x8xUrG4sU5PElMbtzyK7UotDnLfpRv7NtO5EdAcDcjzyklMZg/exec';
 const START_DATE='2026-07-03';
 let DATA={items:[],girls:[],submissions:[]};
 function currentDay(){const s=new Date(START_DATE+'T00:00:00');const n=new Date();s.setHours(0,0,0,0);n.setHours(0,0,0,0);return Math.max(1,Math.floor((n-s)/86400000)+1)}
-function esc(s){return String(s??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
-async function loadData(){
-  refreshBtn.disabled=true; refreshBtn.textContent='جاري التحديث...';
-  rankBox.innerHTML='جاري تحميل البيانات...'; girlsBox.innerHTML='جاري تحميل البيانات...';
-  try{
-    const res=await fetch(API_URL+'?action=getData&v='+Date.now());
-    const data=await res.json();
-    if(!data.ok) throw new Error(data.message||'خطأ');
-    DATA=data; renderAll(); toast('تم تحديث النتائج');
-  }catch(e){
-    rankBox.innerHTML='<div class="empty">تعذر تحميل البيانات<br>تأكدي من رابط السكربت والنشر كـ Web App</div>';
-    girlsBox.innerHTML='<div class="empty">تعذر تحميل البيانات</div>';
-    toast('تعذر تحميل البيانات');
-  }
-  refreshBtn.disabled=false; refreshBtn.textContent='تحديث النتائج';
-}
-function renderAll(){renderStats();renderFilters();renderRank();renderGirls();renderDeleteList()}
-function renderStats(){
-  const maxVisible=Math.max(currentDay(),...DATA.submissions.map(s=>Number(s.day)||1),1);
-  girlsCount.textContent=DATA.girls.length;
-  subCount.textContent=DATA.submissions.length;
-  topScore.textContent=DATA.girls[0]?.totalPoints||0;
-  maxDay.textContent=maxVisible;
-}
-function renderFilters(){
-  const cur=dayFilter.value||'all';
-  const maxVisible=Math.max(currentDay(),...DATA.submissions.map(s=>Number(s.day)||1),1);
-  dayFilter.innerHTML='<option value="all">كل الأيام</option>'+Array.from({length:maxVisible},(_,i)=>`<option value="${i+1}">اليوم ${i+1}</option>`).join('');
-  dayFilter.value=cur;
-}
-function renderRank(){
-  if(!DATA.girls.length){rankBox.innerHTML='<div class="empty">لا توجد تسليمات بعد</div>';return}
-  rankBox.innerHTML=DATA.girls.map((g,i)=>`<div class="rank top${i+1}"><div class="num">${i+1}</div><div class="rinfo"><div class="rname">${esc(g.name)}</div><div class="rmeta">${g.submittedDays} يوم | أساسي ${g.basePoints||0} | إضافات ${g.bonusPoints||0}</div></div><div class="rpts">${g.totalPoints}</div></div>`).join('');
-}
-function renderGirls(){
-  const q=searchInput.value.trim().toLowerCase();
-  const df=dayFilter.value;
-  let girls=DATA.girls.filter(g=>g.name.toLowerCase().includes(q));
-  if(!girls.length){girlsBox.innerHTML='<div class="empty">لا توجد نتائج</div>';return}
-  const maxVisible=Math.max(currentDay(),...DATA.submissions.map(s=>Number(s.day)||1),1);
-  girlsBox.innerHTML=girls.map((g,idx)=>girlCard(g,idx,maxVisible,df)).join('');
-}
-function girlCard(g,idx,maxVisible,df){
-  const shownDays=df==='all'?Array.from({length:maxVisible},(_,i)=>i+1):[Number(df)];
-  const daysHtml=shownDays.map(d=>{const sub=g.days&&g.days[d];return `<div class="day ${sub?'done':''}"><b>${d}</b><small>${sub?(sub.totalPoints+' ع'):'لم تسلّم'}</small></div>`}).join('');
-  const tables=shownDays.map(d=>dayTable(g,d)).join('');
-  return `<div class="girl" id="girl_${idx}"><div class="girl-h" onclick="this.parentElement.classList.toggle('open')"><div class="girl-name">${esc(g.name)}</div><div class="girl-total">${g.totalPoints} علامة</div></div><div class="girl-b"><div class="rmeta">الأيام المسلّمة: ${g.submittedDays} | الأساسي: ${g.basePoints||0} | الإضافات: ${g.bonusPoints||0}</div><div class="days">${daysHtml}</div>${tables}</div></div>`
-}
-function dayTable(g,d){
-  const sub=g.days&&g.days[d];
-  if(!sub)return `<div class="empty">اليوم ${d}: لم يتم التسليم</div>`;
-  return `<div class="table-wrap" style="margin-bottom:12px"><table><thead><tr><th colspan="3">اليوم ${d} - المجموع ${sub.totalPoints} | الأساسي ${sub.basePoints} | الإضافات ${sub.bonusPoints}</th></tr><tr><th>البند</th><th>النقاط</th><th>الحالة</th></tr></thead><tbody>${DATA.items.map(i=>`<tr><td class="item-name">${esc(i.name)}${i.bonus?' <span style="color:#b8860b">(إضافة)</span>':''}</td><td>${i.bonus?'+':''}${i.points}</td><td>${sub.values&&sub.values[i.key]?'<span class="ok">✓ تم</span>':'<span class="no">× لا</span>'}</td></tr>`).join('')}</tbody></table></div>`;
-}
-function renderDeleteList(){
-  deleteSelect.innerHTML='<option value="">اختاري الاسم</option>'+DATA.girls.map(g=>`<option value="${esc(g.name)}">${esc(g.name)}</option>`).join('');
-}
-function toggleAdmin(){adminBox.classList.toggle('show')}
-async function deleteGirl(){
-  const name=deleteSelect.value;
-  if(!name)return toast('اختاري الاسم أولاً');
-  if(!confirm('تأكيد حذف كل بيانات: '+name+'؟'))return;
-  try{
-    const res=await fetch(API_URL,{method:'POST',body:JSON.stringify({action:'deleteGirl',name})});
-    const data=await res.json();
-    toast(data.message||'تم');
-    await loadData();
-  }catch(e){toast('تعذر الحذف')}
-}
-function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500)}
+function showToast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500)}
+async function loadData(){rankingBox.textContent='جاري تحميل البيانات...';daysTableBox.textContent='جاري تحميل البيانات...';try{const res=await fetch(API_URL+'?action=getData&t='+Date.now());const data=await res.json();if(!data.ok)throw new Error(data.message||'خطأ');DATA=data;renderAll();}catch(e){rankingBox.textContent='تعذر تحميل البيانات';daysTableBox.textContent='تعذر تحميل البيانات';showToast('تعذر تحميل البيانات')}}
+function renderAll(){const maxDay=Math.max(currentDay(),...DATA.submissions.map(s=>Number(s.day)||1),1);girlsCount.textContent=DATA.girls.length;subsCount.textContent=DATA.submissions.length;topScore.textContent=DATA.girls[0]?.totalPoints||0;lastDay.textContent=maxDay;renderRanking();renderDaysTable(maxDay);fillDeleteSelect()}
+function renderRanking(){if(!DATA.girls.length){rankingBox.innerHTML='<div class="status">لا توجد بيانات بعد</div>';return}rankingBox.innerHTML=DATA.girls.map((g,i)=>`<div class="rank"><div class="rank-num">${i+1}</div><div class="rank-info"><div class="rank-name">${escapeHtml(g.name)}</div><div class="rank-meta">${g.submittedDays} أيام • الأساسي ${g.basePoints||0} • الإضافات ${g.bonusPoints||0}</div></div><div class="rank-pts">${g.totalPoints}</div></div>`).join('')}
+function renderDaysTable(maxDay){if(!DATA.girls.length){daysTableBox.innerHTML='<div class="status">لا توجد بيانات بعد</div>';return}let head='<tr><th>الاسم</th><th>المجموع</th><th>أيام التسليم</th>';for(let d=1;d<=maxDay;d++)head+=`<th>اليوم ${d}</th>`;head+='</tr>';let body=DATA.girls.map(g=>{let row=`<tr><td class="name-cell">${escapeHtml(g.name)}</td><td class="total-cell">${g.totalPoints}</td><td>${g.submittedDays}</td>`;for(let d=1;d<=maxDay;d++){const sub=g.days&&g.days[d];row+=`<td>${sub?`<span class="day-chip done" onclick="openDetails('${encodeURIComponent(g.name)}',${d})">✓</span>`:`<span class="day-chip miss">-</span>`}</td>`}return row+'</tr>'}).join('');daysTableBox.innerHTML=`<div class="table-wrap"><table>${head}${body}</table></div>`}
+function openDetails(encName,day){const name=decodeURIComponent(encName);const g=DATA.girls.find(x=>x.name===name);const sub=g?.days?.[day];if(!sub)return;modalTitle.textContent=`${name} - اليوم ${day}`;let sums=`<div class="sum-box"><div class="sum"><span>الأساسي</span><b>${sub.basePoints}</b></div><div class="sum"><span>الإضافات</span><b>${sub.bonusPoints}</b></div><div class="sum"><span>المجموع</span><b>${sub.totalPoints}</b></div></div>`;let rows=DATA.items.map(i=>{const done=!!sub.values[i.key];return `<div class="detail-row ${done?'done':'miss'}"><div><div class="detail-name">${done?'✓':'✕'} ${escapeHtml(i.name)}</div>${i.alt?`<div class="detail-alt">${escapeHtml(i.alt)}</div>`:''}</div><div class="detail-pts">${done?(i.bonus?'+':'')+i.points:'0'}</div></div>`}).join('');modalBody.innerHTML=sums+rows;detailModal.classList.add('show')}
+function openDelete(){fillDeleteSelect();deleteModal.classList.add('show')}
+function fillDeleteSelect(){deleteSelect.innerHTML='<option value="">اختاري اسم البنت</option>'+DATA.girls.map(g=>`<option value="${escapeHtml(g.name)}">${escapeHtml(g.name)}</option>`).join('')}
+async function deleteGirl(){const name=deleteSelect.value;if(!name)return showToast('اختاري اسم البنت');if(!confirm('تأكيد حذف كل بيانات '+name+'؟'))return;try{const res=await fetch(API_URL,{method:'POST',body:JSON.stringify({action:'deleteGirl',name})});const data=await res.json();showToast(data.message||'تم');closeModal('deleteModal');loadData()}catch(e){showToast('تعذر الحذف')}}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+function escapeHtml(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 loadData();
 </script>
 </body>
