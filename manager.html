@@ -106,8 +106,10 @@ function renderDayWinners(){
   for(let d=1; d<=max; d++){
     const daySubs=subs.filter(s=>Number(s.day)===d).sort((a,b)=>(b.totalPoints||0)-(a.totalPoints||0));
     if(daySubs.length){
-      const w=daySubs[0];
-      html+=`<div class="winner"><div class="day">اليوم ${d}</div><div class="name">🏆 ${escapeHtml(w.name)}</div><div class="pts">${w.totalPoints} علامة</div></div>`;
+      const top=daySubs[0].totalPoints||0;
+      const winners=daySubs.filter(s=>(s.totalPoints||0)===top);
+      const names=winners.map(w=>escapeHtml(w.name)).join('، ');
+      html+=`<div class="winner"><div class="day">اليوم ${d}</div><div class="name">🏆 ${names}</div><div class="pts">${top} علامة${winners.length>1?' (تعادل)':''}</div></div>`;
     }else{
       html+=`<div class="winner"><div class="day">اليوم ${d}</div><div class="name">—</div><div class="pts">لا يوجد تسليم</div></div>`;
     }
@@ -150,11 +152,15 @@ function detailHtml(s){
 function renderOverallRanks(){
   const girls=DATA.girls||[];
   if(!girls.length){overallRanks.innerHTML='<div class="empty">لا توجد بيانات بعد</div>';return;}
-  overallRanks.innerHTML=girls.map((g,idx)=>`
-    <div class="rank ${idx===0?'top':''}">
-      <div><span class="num">#${idx+1}</span> <span class="name">${escapeHtml(g.name)}</span><br><small>عدد الأيام: ${g.submittedDays||0} | الأساسي: ${g.basePoints||0} | الإضافات: ${g.bonusPoints||0}</small></div>
-      <div class="pts">${g.totalPoints||0}</div>
-    </div>`).join('');
+  let rank=0, prevPts=null;
+  overallRanks.innerHTML=girls.map((g,idx)=>{
+    const pts=g.totalPoints||0;
+    if(pts!==prevPts){rank=idx+1;prevPts=pts;}
+    return `
+    <div class="rank ${rank===1?'top':''}">
+      <div><span class="num">#${rank}</span> <span class="name">${escapeHtml(g.name)}</span><br><small>عدد الأيام: ${g.submittedDays||0} | الأساسي: ${g.basePoints||0} | الإضافات: ${g.bonusPoints||0}</small></div>
+      <div class="pts">${pts}</div>
+    </div>`;}).join('');
 }
 
 function toggleDetails(id){document.getElementById(id)?.classList.toggle('open')}
