@@ -113,12 +113,12 @@ function calc(){
   let b=0,bo=0; const v=values();
   ITEMS.forEach(i=>{if(v[i.key]){i.bonus?bo+=i.points:b+=i.points}});
   basePts.textContent=b; bonusPts.textContent=bo; totalPts.textContent=b+bo;
-  localStorage.setItem('ibada_'+DAY,JSON.stringify(v));
+  localStorage.setItem('ibada_'+START_DATE+'_'+DAY,JSON.stringify(v));
   localStorage.setItem('ibada_name',girlName.value.trim());
 }
 function loadLocal(){
   girlName.value=localStorage.getItem('ibada_name')||'';
-  let v={}; try{v=JSON.parse(localStorage.getItem('ibada_'+DAY)||'{}')}catch(e){}
+  let v={}; try{v=JSON.parse(localStorage.getItem('ibada_'+START_DATE+'_'+DAY)||'{}')}catch(e){}
   document.querySelectorAll('[data-key]').forEach(c=>c.checked=!!v[c.dataset.key]);
 }
 girlName.addEventListener('input',calc);
@@ -130,7 +130,7 @@ async function submitDay(){
   try{
     const res=await fetch(API_URL,{method:'POST',body:JSON.stringify({action:'submitDay',name,day:DAY,values:values()})});
     const data=await res.json();
-    if(data.ok || data.alreadySubmitted){localStorage.setItem('ibada_submitted_'+DAY,'1'); showSubmitted();}
+    if(data.ok || data.alreadySubmitted){localStorage.setItem('ibada_submitted_'+START_DATE+'_'+DAY,'1'); showSubmitted();}
     toast(data.message||'تم التسليم');
   }catch(e){toast('حدث خطأ بالتسليم')}
   submitBtn.disabled=false; submitBtn.textContent='تسليم اليوم';
@@ -141,9 +141,9 @@ function showSubmitted(){
   submitBtn.classList.add('hidden');
   resetBtn.classList.add('hidden');
 }
-function checkSubmitted(){if(localStorage.getItem('ibada_submitted_'+DAY)==='1')showSubmitted()}
+function checkSubmitted(){if(localStorage.getItem('ibada_submitted_'+START_DATE+'_'+DAY)==='1')showSubmitted()}
 function resetToday(){
-  localStorage.removeItem('ibada_'+DAY); localStorage.removeItem('ibada_submitted_'+DAY);
+  localStorage.removeItem('ibada_'+START_DATE+'_'+DAY); localStorage.removeItem('ibada_submitted_'+START_DATE+'_'+DAY);
   document.querySelectorAll('[data-key]').forEach(c=>c.checked=false);
   submittedBox.classList.remove('show'); itemsBox.classList.remove('hidden'); submitBtn.classList.remove('hidden'); resetBtn.classList.remove('hidden');
   calc(); toast('تم التفريغ');
