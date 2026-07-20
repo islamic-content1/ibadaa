@@ -91,14 +91,7 @@
       margin: 4px 0;
       font-size: 28px;
     }
-
-    .group-name {
-      margin-top: 8px;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .btns {
+.btns {
       display: grid;
       grid-template-columns:
         repeat(2, 1fr);
@@ -438,12 +431,7 @@
       <h1>
         نتائج برنامج عبادة
       </h1>
-
-      <div
-        class="group-name"
-        id="groupName"
-      ></div>
-    </div>
+</div>
 
     <div class="btns">
       <button
@@ -572,15 +560,7 @@
         : '1';
 
     let DATA = null;
-
-    document.getElementById(
-      'groupName'
-    ).textContent =
-      GROUP === '2'
-        ? 'مجموعة ا ليالي'
-        : 'المجموعة الأولى';
-
-    async function loadConfig() {
+async function loadConfig() {
       try {
         const response = await fetch(
           API_URL +
@@ -604,20 +584,7 @@
           'startDate'
         ).value =
           data.startDate || '';
-
-        document.getElementById(
-          'groupName'
-        ).textContent =
-          data.sheetName
-            ? 'المجموعة: ' +
-              data.sheetName
-            : (
-              GROUP === '2'
-                ? 'مجموعة ا ليالي'
-                : 'المجموعة الأولى'
-            );
-
-      } catch (error) {
+} catch (error) {
         toast(
           'تعذر تحميل تاريخ البداية'
         );
