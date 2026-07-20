@@ -12,29 +12,13 @@
   <title>نتائج برنامج عبادة</title>
 
   <link
-    rel="icon"
-    type="image/png"
-    href="icon-192.png"
-  >
-
-  <link
-    rel="apple-touch-icon"
-    href="apple-touch-icon.png"
-  >
-
-  <link
-    rel="manifest"
-    href="manifest-manager.json"
+    href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap"
+    rel="stylesheet"
   >
 
   <meta
     name="theme-color"
     content="#1a6b3c"
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap"
-    rel="stylesheet"
   >
 
   <style>
@@ -91,7 +75,8 @@
       margin: 4px 0;
       font-size: 28px;
     }
-.btns {
+
+    .btns {
       display: grid;
       grid-template-columns:
         repeat(2, 1fr);
@@ -279,9 +264,10 @@
     .badge {
       display: inline-block;
       border-radius: 999px;
-      padding: 2px 8px;
+      padding: 3px 8px;
       font-weight: 800;
       font-size: 12px;
+      border: 0;
     }
 
     .done {
@@ -404,16 +390,9 @@
           repeat(2, 1fr);
       }
 
-      .btns {
-        grid-template-columns: 1fr;
-      }
-
+      .btns,
       .settings-row {
         grid-template-columns: 1fr;
-      }
-
-      .settings-row button {
-        width: 100%;
       }
     }
   </style>
@@ -431,9 +410,10 @@
       <h1>
         نتائج برنامج عبادة
       </h1>
-</div>
+    </div>
 
     <div class="btns">
+
       <button
         class="refresh"
         onclick="loadData()"
@@ -447,6 +427,7 @@
       >
         حذف بنت
       </button>
+
     </div>
 
     <div class="settings">
@@ -478,8 +459,8 @@
       </div>
 
       <div class="settings-note">
-        التاريخ المختار سيكون اليوم الأول.
-        اليوم التالي سيكون اليوم الثاني،
+        التاريخ المختار سيكون اليوم الأول،
+        واليوم التالي سيكون اليوم الثاني،
         وهكذا.
       </div>
 
@@ -555,41 +536,49 @@
       );
 
     const GROUP =
-      PARAMS.get('group') === '2'
-        ? '2'
+      ['1', '2', '3'].includes(
+        PARAMS.get('group')
+      )
+        ? PARAMS.get('group')
         : '1';
 
     let DATA = null;
-async function loadConfig() {
+
+
+    async function loadConfig() {
       try {
-        const response = await fetch(
-          API_URL +
-          '?action=getConfig' +
-          '&group=' +
-          encodeURIComponent(GROUP) +
-          '&ts=' +
-          Date.now()
-        );
+        const response =
+          await fetch(
+            API_URL +
+            '?action=getConfig' +
+            '&group=' +
+            encodeURIComponent(
+              GROUP
+            ) +
+            '&ts=' +
+            Date.now()
+          );
 
         const data =
           await response.json();
 
         if (!data.ok) {
           throw new Error(
-            data.message || 'خطأ'
+            data.message ||
+            'خطأ'
           );
         }
 
-        document.getElementById(
-          'startDate'
-        ).value =
+        startDate.value =
           data.startDate || '';
-} catch (error) {
+
+      } catch (error) {
         toast(
           'تعذر تحميل تاريخ البداية'
         );
       }
     }
+
 
     async function loadData() {
       try {
@@ -597,27 +586,30 @@ async function loadConfig() {
           'جاري تحميل النتائج...'
         );
 
-        const response = await fetch(
-          API_URL +
-          '?action=getData' +
-          '&group=' +
-          encodeURIComponent(GROUP) +
-          '&ts=' +
-          Date.now()
-        );
+        const response =
+          await fetch(
+            API_URL +
+            '?action=getData' +
+            '&group=' +
+            encodeURIComponent(
+              GROUP
+            ) +
+            '&ts=' +
+            Date.now()
+          );
 
-        DATA = await response.json();
+        DATA =
+          await response.json();
 
         if (!DATA.ok) {
           throw new Error(
-            DATA.message || 'خطأ'
+            DATA.message ||
+            'خطأ'
           );
         }
 
         if (DATA.startDate) {
-          document.getElementById(
-            'startDate'
-          ).value =
+          startDate.value =
             DATA.startDate;
         }
 
@@ -628,16 +620,20 @@ async function loadConfig() {
         );
 
       } catch (error) {
-        document.getElementById(
-          'dayWinners'
-        ).innerHTML =
-          '<div class="empty">تعذر تحميل البيانات</div>';
+        dayWinners.innerHTML =
+          '<div class="empty">' +
+          'تعذر تحميل البيانات' +
+          '</div>';
+
+        daysTable.innerHTML = '';
+        overallRanks.innerHTML = '';
 
         toast(
           'تعذر تحميل البيانات'
         );
       }
     }
+
 
     function getMaxDay() {
       const submissions =
@@ -647,10 +643,13 @@ async function loadConfig() {
         1,
         ...submissions.map(
           submission =>
-            Number(submission.day) || 1
+            Number(
+              submission.day
+            ) || 1
         )
       );
     }
+
 
     function renderAll() {
       const girls =
@@ -685,6 +684,7 @@ async function loadConfig() {
       renderOverallRanks();
     }
 
+
     function renderDayWinners() {
       const submissions =
         DATA.submissions || [];
@@ -708,12 +708,20 @@ async function loadConfig() {
                 ) === day
             )
             .sort(
-              (a, b) =>
-                (b.totalPoints || 0) -
-                (a.totalPoints || 0)
+              (first, second) =>
+                (
+                  second.totalPoints ||
+                  0
+                ) -
+                (
+                  first.totalPoints ||
+                  0
+                )
             );
 
-        if (daySubmissions.length) {
+        if (
+          daySubmissions.length
+        ) {
           const top =
             daySubmissions[0]
               .totalPoints || 0;
@@ -739,6 +747,7 @@ async function loadConfig() {
 
           html += `
             <div class="winner">
+
               <div class="day">
                 اليوم ${day}
               </div>
@@ -749,18 +758,21 @@ async function loadConfig() {
 
               <div class="pts">
                 ${top} علامة
+
                 ${
                   winners.length > 1
                     ? ' (تعادل)'
                     : ''
                 }
               </div>
+
             </div>
           `;
 
         } else {
           html += `
             <div class="winner">
+
               <div class="day">
                 اليوم ${day}
               </div>
@@ -772,6 +784,7 @@ async function loadConfig() {
               <div class="pts">
                 لا يوجد تسليم
               </div>
+
             </div>
           `;
         }
@@ -779,8 +792,11 @@ async function loadConfig() {
 
       dayWinners.innerHTML =
         html ||
-        '<div class="empty">لا توجد بيانات بعد</div>';
+        '<div class="empty">' +
+        'لا توجد بيانات بعد' +
+        '</div>';
     }
+
 
     function renderDaysTable() {
       const girls =
@@ -791,7 +807,9 @@ async function loadConfig() {
 
       if (!girls.length) {
         daysTable.innerHTML =
-          '<div class="empty">لا توجد بيانات بعد</div>';
+          '<div class="empty">' +
+          'لا توجد بيانات بعد' +
+          '</div>';
 
         return;
       }
@@ -818,95 +836,129 @@ async function loadConfig() {
         '</thead>' +
         '<tbody>';
 
-      girls.forEach(girl => {
-        html += `
-          <tr>
-            <td class="name">
-              ${escapeHtml(girl.name)}
-            </td>
-        `;
-
-        for (
-          let day = 1;
-          day <= maximumDay;
-          day++
-        ) {
-          const submission =
-            girl.days &&
-            girl.days[day];
-
+      girls.forEach(
+        (girl, girlIndex) => {
           html += `
-            <td>
-              ${
-                submission
-                  ? `
-                    <button
-                      class="badge done"
-                      onclick="toggleDetails('${safeId(girl.name, day)}')"
-                    >
-                      ✅ ${submission.totalPoints}
-                    </button>
-                  `
-                  : `
-                    <span class="badge miss">
-                      —
-                    </span>
-                  `
-              }
-            </td>
+            <tr>
+
+              <td class="name">
+                ${escapeHtml(
+                  girl.name
+                )}
+              </td>
           `;
-        }
 
-        html += `
-            <td>
-              <b>
-                ${girl.totalPoints || 0}
-              </b>
-            </td>
-          </tr>
-        `;
+          for (
+            let day = 1;
+            day <= maximumDay;
+            day++
+          ) {
+            const submission =
+              girl.days &&
+              girl.days[day];
 
-        for (
-          let day = 1;
-          day <= maximumDay;
-          day++
-        ) {
-          const submission =
-            girl.days &&
-            girl.days[day];
+            const detailsId =
+              'details_' +
+              girlIndex +
+              '_' +
+              day;
 
-          if (submission) {
             html += `
-              <tr>
-                <td colspan="${maximumDay + 2}">
-                  <div
-                    id="${safeId(girl.name, day)}"
-                    class="details"
-                  >
-                    ${detailHtml(submission)}
-                  </div>
-                </td>
-              </tr>
+              <td>
+
+                ${
+                  submission
+                    ? `
+                      <button
+                        class="badge done"
+                        onclick="toggleDetails('${detailsId}')"
+                      >
+                        ✅ ${submission.totalPoints}
+                      </button>
+                    `
+                    : `
+                      <span class="badge miss">
+                        —
+                      </span>
+                    `
+                }
+
+              </td>
             `;
           }
+
+          html += `
+              <td>
+                <b>
+                  ${girl.totalPoints || 0}
+                </b>
+              </td>
+
+            </tr>
+          `;
+
+          for (
+            let day = 1;
+            day <= maximumDay;
+            day++
+          ) {
+            const submission =
+              girl.days &&
+              girl.days[day];
+
+            if (submission) {
+              const detailsId =
+                'details_' +
+                girlIndex +
+                '_' +
+                day;
+
+              html += `
+                <tr>
+
+                  <td colspan="${
+                    maximumDay + 2
+                  }">
+
+                    <div
+                      id="${detailsId}"
+                      class="details"
+                    >
+                      ${detailHtml(
+                        submission
+                      )}
+                    </div>
+
+                  </td>
+
+                </tr>
+              `;
+            }
+          }
         }
-      });
+      );
 
       html +=
         '</tbody>' +
         '</table>' +
         '</div>';
 
-      daysTable.innerHTML = html;
+      daysTable.innerHTML =
+        html;
     }
 
-    function detailHtml(submission) {
+
+    function detailHtml(
+      submission
+    ) {
       const items =
         DATA.items || [];
 
       return `
         <b>
-          ${escapeHtml(submission.name)}
+          ${escapeHtml(
+            submission.name
+          )}
           -
           اليوم ${submission.day}
         </b>
@@ -927,26 +979,47 @@ async function loadConfig() {
         </p>
 
         <div class="detail-grid">
-          ${
-            items.map(item => {
-              const selected =
-                submission.values &&
-                submission.values[
-                  item.key
-                ];
 
-              return `
-                <div class="item ${selected ? 'y' : 'n'}">
-                  ${selected ? '✅' : '❌'}
-                  ${escapeHtml(item.name)}
-                  (${item.points})
-                </div>
-              `;
-            }).join('')
+          ${
+            items.map(
+              item => {
+                const selected =
+                  submission.values &&
+                  submission.values[
+                    item.key
+                  ];
+
+                return `
+                  <div
+                    class="item ${
+                      selected
+                        ? 'y'
+                        : 'n'
+                    }"
+                  >
+
+                    ${
+                      selected
+                        ? '✅'
+                        : '❌'
+                    }
+
+                    ${escapeHtml(
+                      item.name
+                    )}
+
+                    (${item.points})
+
+                  </div>
+                `;
+              }
+            ).join('')
           }
+
         </div>
       `;
     }
+
 
     function renderOverallRanks() {
       const girls =
@@ -954,7 +1027,9 @@ async function loadConfig() {
 
       if (!girls.length) {
         overallRanks.innerHTML =
-          '<div class="empty">لا توجد بيانات بعد</div>';
+          '<div class="empty">' +
+          'لا توجد بيانات بعد' +
+          '</div>';
 
         return;
       }
@@ -963,79 +1038,175 @@ async function loadConfig() {
       let previousPoints = null;
 
       overallRanks.innerHTML =
-        girls.map((girl, index) => {
-          const points =
-            girl.totalPoints || 0;
+        girls.map(
+          (girl, index) => {
+            const points =
+              girl.totalPoints || 0;
 
-          if (
-            points !== previousPoints
-          ) {
-            rank = index + 1;
-            previousPoints = points;
+            if (
+              points !==
+              previousPoints
+            ) {
+              rank =
+                index + 1;
+
+              previousPoints =
+                points;
+            }
+
+            return `
+              <div
+                class="rank ${
+                  rank === 1
+                    ? 'top'
+                    : ''
+                }"
+              >
+
+                <div>
+
+                  <span class="num">
+                    #${rank}
+                  </span>
+
+                  <span class="name">
+                    ${escapeHtml(
+                      girl.name
+                    )}
+                  </span>
+
+                  <br>
+
+                  <small>
+                    عدد الأيام:
+                    ${
+                      girl.submittedDays ||
+                      0
+                    }
+
+                    |
+
+                    الأساسي:
+                    ${
+                      girl.basePoints ||
+                      0
+                    }
+
+                    |
+
+                    الإضافات:
+                    ${
+                      girl.bonusPoints ||
+                      0
+                    }
+                  </small>
+
+                </div>
+
+                <div class="pts">
+                  ${points}
+                </div>
+
+              </div>
+            `;
           }
-
-          return `
-            <div class="rank ${rank === 1 ? 'top' : ''}">
-              <div>
-                <span class="num">
-                  #${rank}
-                </span>
-
-                <span class="name">
-                  ${escapeHtml(girl.name)}
-                </span>
-
-                <br>
-
-                <small>
-                  عدد الأيام:
-                  ${girl.submittedDays || 0}
-
-                  |
-
-                  الأساسي:
-                  ${girl.basePoints || 0}
-
-                  |
-
-                  الإضافات:
-                  ${girl.bonusPoints || 0}
-                </small>
-              </div>
-
-              <div class="pts">
-                ${points}
-              </div>
-            </div>
-          `;
-        }).join('');
+        ).join('');
     }
+
 
     function toggleDetails(id) {
-      document
-        .getElementById(id)
-        ?.classList
-        .toggle('open');
+      const element =
+        document.getElementById(
+          id
+        );
+
+      if (element) {
+        element.classList.toggle(
+          'open'
+        );
+      }
     }
 
-    function safeId(name, day) {
-      return (
-        'd_' +
-        btoa(
-          unescape(
-            encodeURIComponent(name)
+
+    async function saveStartDate() {
+      const selectedDate =
+        startDate.value;
+
+      if (!selectedDate) {
+        toast(
+          'اختاري تاريخ البداية'
+        );
+
+        return;
+      }
+
+      try {
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method: 'POST',
+
+              body:
+                JSON.stringify({
+                  action:
+                    'setStartDate',
+
+                  group:
+                    GROUP,
+
+                  startDate:
+                    selectedDate
+                })
+            }
+          );
+
+        const data =
+          await response.json();
+
+        toast(
+          data.message ||
+          (
+            data.ok
+              ? 'تم الحفظ'
+              : 'تعذر الحفظ'
           )
-        )
-          .replace(/=/g, '') +
-        '_' +
-        day
-      );
+        );
+
+      } catch (error) {
+        toast(
+          'تعذر حفظ التاريخ'
+        );
+      }
     }
+
 
     async function deleteGirl() {
-      const name = prompt(
-        'اكتبي اسم البنت المراد حذفها كما هو تمامًا:'
-      );
+      if (
+        !DATA ||
+        !DATA.girls ||
+        !DATA.girls.length
+      ) {
+        toast(
+          'لا توجد أسماء للحذف'
+        );
+
+        return;
+      }
+
+      const names =
+        DATA.girls
+          .map(
+            girl =>
+              girl.name
+          )
+          .join('\n');
+
+      const name =
+        prompt(
+          'اكتبي اسم البنت كما هو تمامًا:\n\n' +
+          names
+        );
 
       if (!name) {
         return;
@@ -1043,7 +1214,7 @@ async function loadConfig() {
 
       if (
         !confirm(
-          'هل أنتِ متأكدة من حذف كل بيانات ' +
+          'هل تريدين حذف جميع بيانات ' +
           name +
           '؟'
         )
@@ -1052,136 +1223,93 @@ async function loadConfig() {
       }
 
       try {
-        const response = await fetch(
-          API_URL,
-          {
-            method: 'POST',
-            body: JSON.stringify({
-              action: 'deleteGirl',
-              group: GROUP,
-              name: name
-            })
-          }
-        );
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method: 'POST',
 
-        const data =
-          await response.json();
+              body:
+                JSON.stringify({
+                  action:
+                    'deleteGirl',
 
-        toast(
-          data.message || 'تم'
-        );
+                  group:
+                    GROUP,
 
-        if (data.ok) {
-          await loadData();
-        }
-
-      } catch (error) {
-        toast('تعذر الحذف');
-      }
-    }
-
-    async function saveStartDate() {
-      const startDate =
-        document.getElementById(
-          'startDate'
-        ).value;
-
-      if (!startDate) {
-        toast(
-          'اختاري تاريخ بداية البرنامج'
-        );
-
-        return;
-      }
-
-      const confirmed = confirm(
-        'سيصبح تاريخ ' +
-        startDate +
-        ' هو اليوم الأول لهذه المجموعة. هل أنتِ متأكدة؟'
-      );
-
-      if (!confirmed) {
-        return;
-      }
-
-      try {
-        const response = await fetch(
-          API_URL,
-          {
-            method: 'POST',
-            body: JSON.stringify({
-              action: 'setStartDate',
-              group: GROUP,
-              startDate: startDate
-            })
-          }
-        );
+                  name:
+                    name.trim()
+                })
+            }
+          );
 
         const data =
           await response.json();
 
         toast(
           data.message ||
-          'تم حفظ التاريخ'
+          'تم تنفيذ الطلب'
         );
 
         if (data.ok) {
-          await loadConfig();
+          loadData();
         }
 
       } catch (error) {
         toast(
-          'تعذر حفظ تاريخ البداية'
+          'تعذر حذف البنت'
         );
       }
     }
 
+
     async function clearAllData() {
-      const confirmation = prompt(
-        'لحذف جميع بيانات هذه المجموعة اكتبي كلمة: حذف'
-      );
+      const firstConfirm =
+        confirm(
+          'هل أنتِ متأكدة من حذف جميع بيانات هذه المجموعة؟'
+        );
 
-      if (
-        confirmation &&
-        confirmation.trim() !== 'حذف'
-      ) {
-        toast('الكلمة غير صحيحة');
+      if (!firstConfirm) {
         return;
       }
 
-      if (!confirmation) {
-        return;
-      }
+      const secondConfirm =
+        confirm(
+          'تأكيد أخير: لا يمكن التراجع عن الحذف.'
+        );
 
-      const confirmed = confirm(
-        'سيتم حذف جميع الأسماء والتسليمات من هذه المجموعة نهائيًا. هل أنتِ متأكدة؟'
-      );
-
-      if (!confirmed) {
+      if (!secondConfirm) {
         return;
       }
 
       try {
-        const response = await fetch(
-          API_URL,
-          {
-            method: 'POST',
-            body: JSON.stringify({
-              action: 'clearGroup',
-              group: GROUP
-            })
-          }
-        );
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method: 'POST',
+
+              body:
+                JSON.stringify({
+                  action:
+                    'clearGroup',
+
+                  group:
+                    GROUP
+                })
+            }
+          );
 
         const data =
           await response.json();
 
         toast(
-          data.message || 'تم الحذف'
+          data.message ||
+          'تم تنفيذ الطلب'
         );
 
         if (data.ok) {
-          await loadData();
+          loadData();
         }
 
       } catch (error) {
@@ -1191,19 +1319,33 @@ async function loadConfig() {
       }
     }
 
-    function escapeHtml(text) {
-      return String(text ?? '')
-        .replace(
-          /[&<>"']/g,
-          character => ({
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-          })[character]
+
+    function escapeHtml(value) {
+      return String(
+        value || ''
+      )
+        .replaceAll(
+          '&',
+          '&amp;'
+        )
+        .replaceAll(
+          '<',
+          '&lt;'
+        )
+        .replaceAll(
+          '>',
+          '&gt;'
+        )
+        .replaceAll(
+          '"',
+          '&quot;'
+        )
+        .replaceAll(
+          "'",
+          '&#039;'
         );
     }
+
 
     function toast(text) {
       const element =
@@ -1211,18 +1353,23 @@ async function loadConfig() {
           'toast'
         );
 
-      element.textContent = text;
+      element.textContent =
+        text;
 
-      element.classList.add(
-        'show'
+      element
+        .classList
+        .add('show');
+
+      setTimeout(
+        () => {
+          element
+            .classList
+            .remove('show');
+        },
+        2500
       );
-
-      setTimeout(() => {
-        element.classList.remove(
-          'show'
-        );
-      }, 2500);
     }
+
 
     loadConfig();
     loadData();
