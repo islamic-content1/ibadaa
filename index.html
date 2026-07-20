@@ -1,155 +1,873 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>برنامج عبادة</title>
-<link rel="icon" type="image/png" href="icon-192.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1a6b3c">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-<style>
-:root{--g:#1a6b3c;--gd:#0f4a28;--gl:#e8f6ee;--gold:#b8860b;--bg:#fdfaf5;--sf:#fff;--bd:#e2d9c8;--tx:#2c2416;--mu:#7a6a52;--r:#c0392b}
-*{box-sizing:border-box;font-family:'Amiri',serif!important}
-body{margin:0;background:var(--bg);color:var(--tx);padding:18px 12px 40px}
-.wrap{max-width:560px;margin:auto}
-.hdr{text-align:center;border-bottom:1px solid var(--bd);padding-bottom:14px;margin-bottom:14px}
-.bsm{color:var(--gold);font-weight:700}
-.hdr h1{margin:5px 0;color:var(--gold);font-size:28px}
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;box-shadow:0 2px 12px #0001;padding:14px;margin-bottom:12px}
-.row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
-label{font-weight:700;font-size:15px}
-input[type=text]{flex:1;border:1.5px solid var(--bd);border-radius:10px;padding:10px;font-size:16px;outline:none}
-input[type=text]:focus{border-color:var(--g)}
-.daybox{text-align:center;background:var(--gl);border-color:#5cb87a}
-.daynum{font-size:34px;font-weight:800;color:var(--g)}
-.item{display:flex;align-items:flex-start;gap:10px;border:1px solid var(--bd);border-radius:12px;padding:10px;margin-bottom:8px;background:#fff}
-.item input{width:22px;height:22px;margin-top:3px;accent-color:var(--g)}
-.item-main{flex:1}.name{font-weight:700;font-size:16px}.pts{color:var(--g);font-weight:700;font-size:13px}.alt{color:var(--mu);font-size:12px;line-height:1.6}
-.bonus{background:#fffdf0;border-color:#f0c040}.bonus .pts{color:var(--gold)}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat{text-align:center;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:10px}.stat b{display:block;color:var(--g);font-size:24px}
-.btn{width:100%;border:0;border-radius:12px;padding:13px;font-size:17px;font-weight:700;cursor:pointer;background:linear-gradient(90deg,var(--g),var(--gd));color:#fff}
-.btn:disabled{opacity:.6}.reset{background:#fff;color:var(--r);border:1.5px solid var(--r);margin-top:8px}
-.note{text-align:center;color:var(--mu);font-size:12px;line-height:1.8}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--gd);color:#fff;padding:10px 22px;border-radius:30px;opacity:0;transition:.25s;white-space:nowrap;z-index:20}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.submitted-box{display:none;text-align:center;background:#e8f6ee;border:1.5px solid #5cb87a;color:#1a6b3c;border-radius:14px;padding:18px;margin-bottom:12px;font-size:17px;font-weight:700;line-height:2}
-.submitted-box.show{display:block}.hidden{display:none!important}
-.test-note{display:none;text-align:center;background:#fff8e1;border:1px solid #f0c040;color:#856404;border-radius:12px;padding:10px;margin-bottom:12px;font-size:13px;font-weight:700}
-.test-note.show{display:block}
-</style>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>برنامج عبادة</title>
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="icon-192.png"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="apple-touch-icon.png"
+  >
+
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
+
+  <meta
+    name="theme-color"
+    content="#1a6b3c"
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --g: #1a6b3c;
+      --gd: #0f4a28;
+      --gl: #e8f6ee;
+      --gold: #b8860b;
+      --bg: #fdfaf5;
+      --sf: #fff;
+      --bd: #e2d9c8;
+      --tx: #2c2416;
+      --mu: #7a6a52;
+      --r: #c0392b;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Amiri', serif !important;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--tx);
+      padding: 18px 12px 40px;
+    }
+
+    .wrap {
+      max-width: 560px;
+      margin: auto;
+    }
+
+    .hdr {
+      text-align: center;
+      border-bottom: 1px solid var(--bd);
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+    }
+
+    .bsm {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .hdr h1 {
+      margin: 5px 0;
+      color: var(--gold);
+      font-size: 28px;
+    }
+
+    .card {
+      background: var(--sf);
+      border: 1px solid var(--bd);
+      border-radius: 14px;
+      box-shadow: 0 2px 12px #0001;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      border: 1.5px solid var(--bd);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--g);
+    }
+
+    .daybox {
+      text-align: center;
+      background: var(--gl);
+      border-color: #5cb87a;
+    }
+
+    .daynum {
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--g);
+    }
+
+    .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border: 1px solid var(--bd);
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 8px;
+      background: #fff;
+    }
+
+    .item input {
+      width: 22px;
+      height: 22px;
+      margin-top: 3px;
+      accent-color: var(--g);
+    }
+
+    .item-main {
+      flex: 1;
+    }
+
+    .name {
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .pts {
+      color: var(--g);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .alt {
+      color: var(--mu);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .bonus {
+      background: #fffdf0;
+      border-color: #f0c040;
+    }
+
+    .bonus .pts {
+      color: var(--gold);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .stat {
+      text-align: center;
+      background: #fff;
+      border: 1px solid var(--bd);
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .stat b {
+      display: block;
+      color: var(--g);
+      font-size: 24px;
+    }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 13px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(
+        90deg,
+        var(--g),
+        var(--gd)
+      );
+      color: #fff;
+    }
+
+    .btn:disabled {
+      opacity: .6;
+    }
+
+    .reset {
+      background: #fff;
+      color: var(--r);
+      border: 1.5px solid var(--r);
+      margin-top: 8px;
+    }
+
+    .note {
+      text-align: center;
+      color: var(--mu);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform:
+        translateX(-50%)
+        translateY(70px);
+      background: var(--gd);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 30px;
+      opacity: 0;
+      transition: .25s;
+      white-space: nowrap;
+      z-index: 20;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform:
+        translateX(-50%)
+        translateY(0);
+    }
+
+    .submitted-box {
+      display: none;
+      text-align: center;
+      background: #e8f6ee;
+      border: 1.5px solid #5cb87a;
+      color: #1a6b3c;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 2;
+    }
+
+    .submitted-box.show {
+      display: block;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .test-note {
+      display: none;
+      text-align: center;
+      background: #fff8e1;
+      border: 1px solid #f0c040;
+      color: #856404;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .test-note.show {
+      display: block;
+    }
+  </style>
 </head>
+
 <body>
-<div class="wrap">
-  <div class="hdr"><div class="bsm">بسم الله الرحمن الرحيم</div><h1>برنامج عبادة</h1><p>تعبئة وتسليم اليوم الحالي فقط</p></div>
-  <div class="test-note" id="testNote"></div>
-  <div class="card"><div class="row"><label>الاسم:</label><input id="girlName" type="text" placeholder="اكتبي اسمك"></div></div>
-  <div class="card daybox"><div>اليوم الحالي</div><div class="daynum" id="dayNum">1</div></div>
-  <div class="submitted-box" id="submittedBox">✅ تم تسليم أعمال اليوم الحالي<br>يمكنكِ العودة غدًا لتسليم اليوم التالي</div>
-  <div class="card" id="itemsBox"></div>
-  <div class="card stats" id="statsBox">
-    <div class="stat"><span>الأساسي</span><b id="basePts">0</b></div>
-    <div class="stat"><span>الإضافات</span><b id="bonusPts">0</b></div>
-    <div class="stat"><span>المجموع</span><b id="totalPts">0</b></div>
-  </div>
-  <button class="btn" id="submitBtn" onclick="submitDay()">تسليم اليوم</button>
-  <button class="btn reset" id="resetBtn" onclick="resetToday()">تفريغ اختيارات اليوم</button>
-  <p class="note">الأساسي من 100، والإضافات قد تجعل المجموع أكثر من 100.</p>
-</div>
-<div class="toast" id="toast"></div>
-<script>
-const API_URL='https://script.google.com/macros/s/AKfycbxwQ0sJ7vnhEJL8Ty2J4x8xUrG4sU5PElMbtzyK7UotDnLfpRv7NtO5EdAcDcjzyklMZg/exec';
-const START_DATE='2026-07-20';
-const ITEMS=[
-{key:'fard',name:'الفروض الخمسة',points:20,alt:'بدل الفروض: 250 حوقلة'},
-{key:'sunan',name:'سنن الفروض',points:5,alt:'بدل السنن: 100 حوقلة'},
-{key:'duha',name:'ركعتا الضحى',points:5,alt:'بدل الضحى: 15 تسبيح'},
-{key:'awwabin',name:'ركعتا الأوابين',points:5,alt:'بدل الأوابين: 15 تسبيح'},
-{key:'azkarMorning',name:'أذكار الصباح',points:5,alt:''},
-{key:'azkarEvening',name:'أذكار المساء',points:5,alt:''},
-{key:'mulk',name:'سورة الملك قبل النوم',points:5,alt:'بدل سورة الملك: 100 استغفار'},
-{key:'istighfar',name:'استغفار 500',points:5,alt:''},
-{key:'tahleel',name:'تهليل 500',points:5,alt:''},
-{key:'salatNabi',name:'صلاة عالرسول 500',points:5,alt:''},
-{key:'quran',name:'جزء قرآن',points:10,alt:'بدل جزء القرآن: 500 تهليل'},
-{key:'hifz',name:'حفظ صفحتين',points:10,alt:''},
-{key:'helpMom',name:'مساعدة الأم',points:10,alt:''},
-{key:'goodWord',name:'كلمة طيبة دعوية',points:5,alt:''},
-{key:'sleep',name:'النوم الساعة 10–11',points:10,bonus:true,alt:''},
-{key:'noProblems',name:'يوم بلا مشاكل',points:10,bonus:true,alt:''}
-];
 
-function currentDay(){
-  const params=new URLSearchParams(window.location.search);
-  const testDay=Number(params.get('testDay'));
-  if(testDay && testDay>=1){
-    testNote.textContent='وضع الاختبار مفعل: اليوم '+testDay;
-    testNote.classList.add('show');
-    return testDay;
-  }
-  const s=new Date(START_DATE+'T00:00:00');
-  const n=new Date();
-  s.setHours(0,0,0,0); n.setHours(0,0,0,0);
-  return Math.max(1,Math.floor((n-s)/86400000)+1);
-}
-const DAY=currentDay(); dayNum.textContent=DAY;
+  <div class="wrap">
 
-function render(){
-  itemsBox.innerHTML=ITEMS.map(i=>`
-    <label class="item ${i.bonus?'bonus':''}">
-      <input type="checkbox" data-key="${i.key}" onchange="calc()">
-      <div class="item-main">
-        <div class="name">${i.name}</div>
-        <div class="pts">${i.bonus?'+':''}${i.points} علامة</div>
-        ${i.alt?`<div class="alt">${i.alt}</div>`:''}
+    <div class="hdr">
+      <div class="bsm">
+        بسم الله الرحمن الرحيم
       </div>
-    </label>`).join('');
-  loadLocal(); calc();
-}
-function values(){const v={};document.querySelectorAll('[data-key]').forEach(c=>v[c.dataset.key]=c.checked);return v}
-function calc(){
-  let b=0,bo=0; const v=values();
-  ITEMS.forEach(i=>{if(v[i.key]){i.bonus?bo+=i.points:b+=i.points}});
-  basePts.textContent=b; bonusPts.textContent=bo; totalPts.textContent=b+bo;
-  localStorage.setItem('ibada_'+START_DATE+'_'+DAY,JSON.stringify(v));
-  localStorage.setItem('ibada_name',girlName.value.trim());
-}
-function loadLocal(){
-  girlName.value=localStorage.getItem('ibada_name')||'';
-  let v={}; try{v=JSON.parse(localStorage.getItem('ibada_'+START_DATE+'_'+DAY)||'{}')}catch(e){}
-  document.querySelectorAll('[data-key]').forEach(c=>c.checked=!!v[c.dataset.key]);
-}
-girlName.addEventListener('input',calc);
 
-async function submitDay(){
-  const name=girlName.value.trim();
-  if(!name)return toast('اكتبي الاسم أولاً');
-  submitBtn.disabled=true; submitBtn.textContent='جاري التسليم...';
-  try{
-    const res=await fetch(API_URL,{method:'POST',body:JSON.stringify({action:'submitDay',name,day:DAY,values:values()})});
-    const data=await res.json();
-    if(data.ok || data.alreadySubmitted){localStorage.setItem('ibada_submitted_'+START_DATE+'_'+DAY,'1'); showSubmitted();}
-    toast(data.message||'تم التسليم');
-  }catch(e){toast('حدث خطأ بالتسليم')}
-  submitBtn.disabled=false; submitBtn.textContent='تسليم اليوم';
-}
-function showSubmitted(){
-  submittedBox.classList.add('show');
-  itemsBox.classList.add('hidden');
-  submitBtn.classList.add('hidden');
-  resetBtn.classList.add('hidden');
-}
-function checkSubmitted(){if(localStorage.getItem('ibada_submitted_'+START_DATE+'_'+DAY)==='1')showSubmitted()}
-function resetToday(){
-  localStorage.removeItem('ibada_'+START_DATE+'_'+DAY); localStorage.removeItem('ibada_submitted_'+START_DATE+'_'+DAY);
-  document.querySelectorAll('[data-key]').forEach(c=>c.checked=false);
-  submittedBox.classList.remove('show'); itemsBox.classList.remove('hidden'); submitBtn.classList.remove('hidden'); resetBtn.classList.remove('hidden');
-  calc(); toast('تم التفريغ');
-}
-function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500)}
-render(); checkSubmitted();
-</script>
+      <h1>برنامج عبادة</h1>
+
+      <p>
+        تعبئة وتسليم اليوم الحالي فقط
+      </p>
+    </div>
+
+    <div
+      class="test-note"
+      id="testNote"
+    ></div>
+
+    <div class="card">
+      <div class="row">
+        <label for="girlName">
+          الاسم:
+        </label>
+
+        <input
+          id="girlName"
+          type="text"
+          placeholder="اكتبي اسمك"
+        >
+      </div>
+    </div>
+
+    <div class="card daybox">
+      <div>اليوم الحالي</div>
+
+      <div
+        class="daynum"
+        id="dayNum"
+      >
+        1
+      </div>
+    </div>
+
+    <div
+      class="submitted-box"
+      id="submittedBox"
+    >
+      ✅ تم تسليم أعمال اليوم الحالي
+      <br>
+      يمكنكِ العودة غدًا لتسليم اليوم التالي
+    </div>
+
+    <div
+      class="card"
+      id="itemsBox"
+    ></div>
+
+    <div
+      class="card stats"
+      id="statsBox"
+    >
+      <div class="stat">
+        <span>الأساسي</span>
+        <b id="basePts">0</b>
+      </div>
+
+      <div class="stat">
+        <span>الإضافات</span>
+        <b id="bonusPts">0</b>
+      </div>
+
+      <div class="stat">
+        <span>المجموع</span>
+        <b id="totalPts">0</b>
+      </div>
+    </div>
+
+    <button
+      class="btn"
+      id="submitBtn"
+      onclick="submitDay()"
+    >
+      تسليم اليوم
+    </button>
+
+    <button
+      class="btn reset"
+      id="resetBtn"
+      onclick="resetToday()"
+    >
+      تفريغ اختيارات اليوم
+    </button>
+
+    <p class="note">
+      الأساسي من 100، والإضافات قد تجعل
+      المجموع أكثر من 100.
+    </p>
+
+  </div>
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+  <script>
+    const API_URL =
+      'https://script.google.com/macros/s/AKfycbxwQ0sJ7vnhEJL8Ty2J4x8xUrG4sU5PElMbtzyK7UotDnLfpRv7NtO5EdAcDcjzyklMZg/exec';
+
+    const PARAMS =
+      new URLSearchParams(window.location.search);
+
+    const GROUP =
+      PARAMS.get('group') === '2' ? '2' : '1';
+
+    let START_DATE = '';
+    let DAY = 1;
+
+    const ITEMS = [
+      {
+        key: 'fard',
+        name: 'الفروض الخمسة',
+        points: 20,
+        alt: 'بدل الفروض: 250 حوقلة'
+      },
+      {
+        key: 'sunan',
+        name: 'سنن الفروض',
+        points: 5,
+        alt: 'بدل السنن: 100 حوقلة'
+      },
+      {
+        key: 'duha',
+        name: 'ركعتا الضحى',
+        points: 5,
+        alt: 'بدل الضحى: 15 تسبيح'
+      },
+      {
+        key: 'awwabin',
+        name: 'ركعتا الأوابين',
+        points: 5,
+        alt: 'بدل الأوابين: 15 تسبيح'
+      },
+      {
+        key: 'azkarMorning',
+        name: 'أذكار الصباح',
+        points: 5,
+        alt: ''
+      },
+      {
+        key: 'azkarEvening',
+        name: 'أذكار المساء',
+        points: 5,
+        alt: ''
+      },
+      {
+        key: 'mulk',
+        name: 'سورة الملك قبل النوم',
+        points: 5,
+        alt: 'بدل سورة الملك: 100 استغفار'
+      },
+      {
+        key: 'istighfar',
+        name: 'استغفار 500',
+        points: 5,
+        alt: ''
+      },
+      {
+        key: 'tahleel',
+        name: 'تهليل 500',
+        points: 5,
+        alt: ''
+      },
+      {
+        key: 'salatNabi',
+        name: 'صلاة عالرسول 500',
+        points: 5,
+        alt: ''
+      },
+      {
+        key: 'quran',
+        name: 'جزء قرآن',
+        points: 10,
+        alt: 'بدل جزء القرآن: 500 تهليل'
+      },
+      {
+        key: 'hifz',
+        name: 'حفظ صفحتين',
+        points: 10,
+        alt: ''
+      },
+      {
+        key: 'helpMom',
+        name: 'مساعدة الأم',
+        points: 10,
+        alt: ''
+      },
+      {
+        key: 'goodWord',
+        name: 'كلمة طيبة دعوية',
+        points: 5,
+        alt: ''
+      },
+      {
+        key: 'sleep',
+        name: 'النوم الساعة 10–11',
+        points: 10,
+        bonus: true,
+        alt: ''
+      },
+      {
+        key: 'noProblems',
+        name: 'يوم بلا مشاكل',
+        points: 10,
+        bonus: true,
+        alt: ''
+      }
+    ];
+
+    function getDraftKey() {
+      return (
+        'ibada_' +
+        GROUP +
+        '_' +
+        START_DATE +
+        '_' +
+        DAY
+      );
+    }
+
+    function getSubmittedKey() {
+      return (
+        'ibada_submitted_' +
+        GROUP +
+        '_' +
+        START_DATE +
+        '_' +
+        DAY
+      );
+    }
+
+    function getNameKey() {
+      return 'ibada_name_' + GROUP;
+    }
+
+    function currentDay() {
+      const testDay =
+        Number(PARAMS.get('testDay'));
+
+      if (testDay && testDay >= 1) {
+        testNote.textContent =
+          'وضع الاختبار مفعل: اليوم ' +
+          testDay;
+
+        testNote.classList.add('show');
+
+        return testDay;
+      }
+
+      const start =
+        new Date(START_DATE + 'T00:00:00');
+
+      const now = new Date();
+
+      start.setHours(0, 0, 0, 0);
+      now.setHours(0, 0, 0, 0);
+
+      const difference =
+        Math.floor(
+          (now - start) / 86400000
+        ) + 1;
+
+      return Math.max(1, difference);
+    }
+
+    async function initPage() {
+      try {
+        const response = await fetch(
+          API_URL +
+          '?action=getConfig' +
+          '&group=' +
+          encodeURIComponent(GROUP) +
+          '&ts=' +
+          Date.now()
+        );
+
+        const data = await response.json();
+
+        if (!data.ok) {
+          throw new Error(
+            data.message || 'خطأ'
+          );
+        }
+
+        START_DATE =
+          data.startDate || '2026-07-20';
+
+      } catch (error) {
+        START_DATE = '2026-07-20';
+
+        toast(
+          'تعذر تحميل تاريخ البداية'
+        );
+      }
+
+      DAY = currentDay();
+
+      dayNum.textContent = DAY;
+
+      render();
+      checkSubmitted();
+    }
+
+    function render() {
+      itemsBox.innerHTML =
+        ITEMS.map(item => `
+          <label class="item ${item.bonus ? 'bonus' : ''}">
+            <input
+              type="checkbox"
+              data-key="${item.key}"
+              onchange="calc()"
+            >
+
+            <div class="item-main">
+              <div class="name">
+                ${item.name}
+              </div>
+
+              <div class="pts">
+                ${item.bonus ? '+' : ''}
+                ${item.points} علامة
+              </div>
+
+              ${
+                item.alt
+                  ? `<div class="alt">${item.alt}</div>`
+                  : ''
+              }
+            </div>
+          </label>
+        `).join('');
+
+      loadLocal();
+      calc();
+    }
+
+    function values() {
+      const result = {};
+
+      document
+        .querySelectorAll('[data-key]')
+        .forEach(checkbox => {
+          result[checkbox.dataset.key] =
+            checkbox.checked;
+        });
+
+      return result;
+    }
+
+    function calc() {
+      let base = 0;
+      let bonus = 0;
+
+      const selectedValues = values();
+
+      ITEMS.forEach(item => {
+        if (selectedValues[item.key]) {
+          if (item.bonus) {
+            bonus += item.points;
+          } else {
+            base += item.points;
+          }
+        }
+      });
+
+      basePts.textContent = base;
+      bonusPts.textContent = bonus;
+      totalPts.textContent = base + bonus;
+
+      localStorage.setItem(
+        getDraftKey(),
+        JSON.stringify(selectedValues)
+      );
+
+      localStorage.setItem(
+        getNameKey(),
+        girlName.value.trim()
+      );
+    }
+
+    function loadLocal() {
+      girlName.value =
+        localStorage.getItem(
+          getNameKey()
+        ) || '';
+
+      let savedValues = {};
+
+      try {
+        savedValues = JSON.parse(
+          localStorage.getItem(
+            getDraftKey()
+          ) || '{}'
+        );
+      } catch (error) {
+        savedValues = {};
+      }
+
+      document
+        .querySelectorAll('[data-key]')
+        .forEach(checkbox => {
+          checkbox.checked =
+            Boolean(
+              savedValues[
+                checkbox.dataset.key
+              ]
+            );
+        });
+    }
+
+    girlName.addEventListener(
+      'input',
+      calc
+    );
+
+    async function submitDay() {
+      const name =
+        girlName.value.trim();
+
+      if (!name) {
+        toast('اكتبي الاسم أولًا');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent =
+        'جاري التسليم...';
+
+      try {
+        const response = await fetch(
+          API_URL,
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              action: 'submitDay',
+              group: GROUP,
+              name: name,
+              day: DAY,
+              values: values()
+            })
+          }
+        );
+
+        const data =
+          await response.json();
+
+        if (
+          data.ok ||
+          data.alreadySubmitted
+        ) {
+          localStorage.setItem(
+            getSubmittedKey(),
+            '1'
+          );
+
+          showSubmitted();
+        }
+
+        toast(
+          data.message || 'تم التسليم'
+        );
+
+      } catch (error) {
+        toast('حدث خطأ بالتسليم');
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent =
+        'تسليم اليوم';
+    }
+
+    function showSubmitted() {
+      submittedBox.classList.add(
+        'show'
+      );
+
+      itemsBox.classList.add(
+        'hidden'
+      );
+
+      submitBtn.classList.add(
+        'hidden'
+      );
+
+      resetBtn.classList.add(
+        'hidden'
+      );
+    }
+
+    function checkSubmitted() {
+      if (
+        localStorage.getItem(
+          getSubmittedKey()
+        ) === '1'
+      ) {
+        showSubmitted();
+      }
+    }
+
+    function resetToday() {
+      localStorage.removeItem(
+        getDraftKey()
+      );
+
+      localStorage.removeItem(
+        getSubmittedKey()
+      );
+
+      document
+        .querySelectorAll('[data-key]')
+        .forEach(checkbox => {
+          checkbox.checked = false;
+        });
+
+      submittedBox.classList.remove(
+        'show'
+      );
+
+      itemsBox.classList.remove(
+        'hidden'
+      );
+
+      submitBtn.classList.remove(
+        'hidden'
+      );
+
+      resetBtn.classList.remove(
+        'hidden'
+      );
+
+      calc();
+
+      toast('تم التفريغ');
+    }
+
+    function toast(text) {
+      const element =
+        document.getElementById(
+          'toast'
+        );
+
+      element.textContent = text;
+
+      element.classList.add(
+        'show'
+      );
+
+      setTimeout(() => {
+        element.classList.remove(
+          'show'
+        );
+      }, 2500);
+    }
+
+    initPage();
+  </script>
+
 </body>
 </html>
