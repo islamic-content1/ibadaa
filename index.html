@@ -9,7 +9,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>برنامج عبادة</title>
+  <title>برنامج عبادة - المجموعة الأولى</title>
 
   <link
     rel="icon"
@@ -24,7 +24,7 @@
 
   <link
     rel="manifest"
-    href="manifest.json"
+    href="manifest1.json"
   >
 
   <meta
@@ -315,6 +315,7 @@
       </div>
 
       <h1>برنامج عبادة</h1>
+      <div class="bsm">المجموعة الأولى</div>
 
       <p>
         تعبئة وتسليم اليوم الحالي فقط
@@ -430,12 +431,7 @@
         window.location.search
       );
 
-    const GROUP =
-      ['1', '2', '3'].includes(
-        PARAMS.get('group')
-      )
-        ? PARAMS.get('group')
-        : '1';
+    const GROUP = '1';
 
     let START_DATE = '';
     let DAY = 1;
