@@ -1,7 +1,7 @@
 {
   "id": "./index2.html?app=group2",
   "name": "برنامج عبادة ",
-  "short_name": "--",
+  "short_name": "عبادة",
   "start_url": "./index2.html?app=group2",
   "scope": "./",
   "display": "standalone",
