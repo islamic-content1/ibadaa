@@ -9,7 +9,6 @@
     content="width=device-width, initial-scale=1.0"
   >
 
- 
 
   <link
     rel="icon"
@@ -1000,6 +999,13 @@
       );
     }
 
+
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./service-worker.js').catch(function () {});
+      });
+    }
 
     initPage();
   </script>
